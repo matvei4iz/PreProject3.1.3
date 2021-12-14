@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en" class="h-100"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Страница администратора</title>
@@ -54,13 +55,13 @@
             <!--    левый блок столбец (выбор страницы панели админа или юзера)-->
             <div class="col-md-2 d-flex flex-column flex-shrink-0 p-3 bg-white">
                 <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin"
+                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link" id="admin-tab" data-bs-toggle="tab" data-bs-target="#admin"
                            type="button" role="tab" aria-controls="admin" aria-selected="true">Админ
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link " id="user-tab" data-bs-toggle="tab" data-bs-target="#user"
+                        <a class="nav-link active" id="user-tab" data-bs-toggle="tab" data-bs-target="#user"
                            type="button" role="tab" aria-controls="user" aria-selected="true">Пользователь
                         </a>
                     </li>
@@ -71,15 +72,17 @@
             <div class="tab-content col-md-10 text-left bg-light" id="123">
                 <!-- блок в блоке для грамотной разметки-->
                 <!-- блок с вкладлками, текст аллюзерс, таблица ( внутри таблицы модальные окна, вкладки юзер тэйбл и нью юзер) -->
-                <div class="tab-pane fade show active text-left  p-3" id="admin" role="tabpanel"
-                     aria-labelledby="admin-tab">
+
+                <div class="tab-pane fade text-left  p-3" id="admin" role="tabpanel"
+                     aria-labelledby="admin-tab" sec:authorize="hasRole('ROLE_ADMIN')">
                     <h1 style="color: black">Панель администратора</h1>
 
                     <!-- блок с вкладками  юзер тэйбл, нью юзер-->
 
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <button class="nav-link active" id="table-tab" data-bs-toggle="tab" data-bs-target="#table"
+                            <button class="nav-link active" id="table-tab" data-bs-toggle="tab"
+                                    data-bs-target="#table"
                                     type="button" role="tab" aria-controls="table" aria-selected="true">Таблица
                                 пользователей
                             </button>
@@ -142,10 +145,12 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="editingBackdropLabel">Изменение
+                                                            <h5 class="modal-title" id="editingBackdropLabel">
+                                                                Изменение
                                                                 пользователя</h5>
                                                             <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
 
@@ -232,7 +237,8 @@
                                         </td>
 
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                                    data-bs-toggle="modal"
                                                     data-bs-target="#staticBackdrop"
                                                     th:data-bs-target="${'#deleteModal'+user.id}">Удалить
                                             </button>
@@ -249,7 +255,8 @@
                                                             <h5 class="modal-title" id="BackdropLabel">Удаление
                                                                 пользователя</h5>
                                                             <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    data-bs-dismiss="modal"
+                                                                    aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
 
@@ -309,9 +316,11 @@
                                                                                th:value="${user.password}">
                                                                     </div>
                                                                     <div class="mb-3">
-                                                                        <label for="roleModalDelete" class="form-label">
+                                                                        <label for="roleModalDelete"
+                                                                               class="form-label">
                                                                             Роль</label>
-                                                                        <select class="form-select" size="2" multiple
+                                                                        <select class="form-select" size="2"
+                                                                                multiple
                                                                                 id="roleModalDelete"
                                                                                 th:name="roles">
                                                                             <option th:each="role : ${allRoles}"
@@ -325,7 +334,8 @@
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Закрыть
                                                                     </button>
-                                                                    <button type="submit" class="btn btn-danger">Удалить
+                                                                    <button type="submit" class="btn btn-danger">
+                                                                        Удалить
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -349,7 +359,8 @@
 
                         <!--            контент вкладки Новый пользователь            -->
 
-                        <div class="tab-pane fade border" id="addForm" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade border" id="addForm" role="tabpanel"
+                             aria-labelledby="profile-tab">
 
                             <!--            надпись Добавить нового пользователя            -->
 
@@ -406,7 +417,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade text-left p-3" id="user" role="tabpanel"
+
+                <div class="tab-pane show active fade text-left p-3" id="user" role="tabpanel"
                      aria-labelledby="user-tab">
                     <h1 style="color: black">Информация о пользователе</h1>
                     <div class="tab-content border" id="userTabContent">

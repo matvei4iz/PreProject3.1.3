@@ -23,8 +23,7 @@ public class UserController {
     public String currentUser(ModelMap model) {
         UserDetails userDetails =
                 (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByUsername(userDetails.getUsername());
-        model.addAttribute("user", user);
-        return "userPage";
+        model.addAttribute("thisUser", userService.findByUsername(userDetails.getUsername()));
+        return "adminPageBS";
     }
 }
