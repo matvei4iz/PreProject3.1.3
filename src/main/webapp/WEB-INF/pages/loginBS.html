@@ -17,7 +17,7 @@
 <div class="h-100">
     <div class="container-fluid d-flex justify-content-center align-items-center mt-5 h-100">
 
-        <form method="post" action="/login/suc">
+        <form method="post" action="/login">
 
             <h3 class="h2 mb-3 fw-normal"><strong>Пожалуйста, войдите</strong></h3>
 
@@ -29,19 +29,19 @@
             </div>
 
             <div class="form-floating mb-2">
-                <input style="height: 45px;" type="text" class="form-control" id="floatingInput"
+                <input style="height: 45px" name="j_username" type="text" class="form-control" id="floatingInput"
                        placeholder="Имя пользователя" required autofocus>
-                <label style="line-height: 1px;" for="floatingInput">Имя пользователя</label>
+                <label style="line-height: 1px" for="floatingInput">Имя пользователя</label>
             </div>
 
             <div class="form-floating">
-                <input style="height: 45px" type="password" class="form-control" id="floatingPassword"
+                <input style="height: 45px" name="j_password" type="password" class="form-control" id="floatingPassword"
                        placeholder="Пароль" required>
-                <label style="line-height: 1px;" for="floatingPassword">Пароль</label>
+                <label style="line-height: 1px" for="floatingPassword">Пароль</label>
             </div>
 
             <div class="d-grid gap-2 mt-2">
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Войти</button>
+                <button value="Log in" type="submit" class="btn btn-primary btn-lg btn-block">Войти</button>
             </div>
 
         </form>

@@ -28,7 +28,8 @@ public class AdminController {
         model.addAttribute("allRoles", roleService.allRoles());
         model.addAttribute("thisUser", user);
         model.addAttribute("users", userService.allUsers());
-        return "adminPageBS";
+        model.addAttribute("flag", user.getUserRolesForUI().contains("ADMIN"));
+        return "mainPageBS";
     }
 
 

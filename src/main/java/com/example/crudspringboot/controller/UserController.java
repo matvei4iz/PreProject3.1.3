@@ -23,7 +23,9 @@ public class UserController {
     public String currentUser(ModelMap model) {
         UserDetails userDetails =
                 (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("thisUser", userService.findByUsername(userDetails.getUsername()));
-        return "adminPageBS";
+        User user = userService.findByUsername(userDetails.getUsername());
+        model.addAttribute("thisUser", user);
+        model.addAttribute("flag", user.getUserRolesForUI().contains("ADMIN"));
+        return "mainPageBS";
     }
 }
