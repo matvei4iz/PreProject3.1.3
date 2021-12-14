@@ -1,9 +1,6 @@
 package com.example.crudspringboot.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -13,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Role implements GrantedAuthority {
 
     @Id
@@ -23,8 +19,8 @@ public class Role implements GrantedAuthority {
     @Column
     private String name;
 
-    public Role(Long id) {
-        this.id = id;
+    public Role(String name) {
+        this.name = name;
     }
 
     @Override
@@ -35,5 +31,9 @@ public class Role implements GrantedAuthority {
     @Override
     public String toString() {
         return name;
+    }
+
+    public String getShortName() {
+        return name.replace("ROLE_", "");
     }
 }

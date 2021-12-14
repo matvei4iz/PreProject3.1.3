@@ -6,7 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
@@ -39,15 +41,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-    public String getUserRole() {
-        boolean isAdmin = roles.stream().anyMatch(r -> r.getName().equals("ROLE_ADMIN"));
-        boolean isUser = roles.stream().anyMatch(r -> r.getName().equals("ROLE_USER"));
-
-        if (isAdmin && isUser) {
-            return "ROLE_ADMIN, ROLE_USER";
-        }
-
-        return isAdmin ? "ROLE_ADMIN" : "ROLE_USER";
+    public String getUserRolesForUI() {
+        return roles.stream()
+                .map(Role::getShortName)
+                .collect(Collectors.joining(", "));
     }
 
     public Long getId() {
@@ -100,6 +97,14 @@ public class User implements UserDetails {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setRoles(String role) {
+        Role role1 = new Role(role);
+        if (role == null) {
+            this.roles = new ArrayList<>();
+        }
+        this.roles.add(role1);
     }
 
     @Override
