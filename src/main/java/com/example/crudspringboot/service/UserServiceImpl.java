@@ -3,6 +3,7 @@ package com.example.crudspringboot.service;
 import com.example.crudspringboot.dao.UserDao;
 import com.example.crudspringboot.model.Role;
 import com.example.crudspringboot.model.User;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,18 +11,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private final RoleService roleService;
 
     @Transactional
     @Override
@@ -32,18 +30,28 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void add(User user) {
+        user.setRoles(user.getRoles().stream()
+                .map(r -> roleService.findByName(r.getName()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList()));
         userDao.add(user);
     }
 
     @Transactional
     @Override
-    public void remove(User user) {
-        userDao.remove(user);
+    public void remove(long id) {
+        userDao.remove(userDao.getById(id));
     }
 
     @Transactional
     @Override
     public void edit(User user) {
+        user.setRoles(user.getRoles().stream()
+                .map(r -> roleService.findByName(r.getName()))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList()));
         userDao.edit(user);
     }
 

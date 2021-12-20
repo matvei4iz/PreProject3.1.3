@@ -1,5 +1,7 @@
 package com.example.crudspringboot.model;
 
+import com.example.crudspringboot.util.RoleListDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
@@ -30,16 +33,17 @@ public class User implements UserDetails {
     private int age;
 
     @Column(name="user_name")
-    private String userName;
+    private String username;
 
     @Column
     private String password;
 
+    @JsonDeserialize(using = RoleListDeserializer.class)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private List<Role> roles;
 
     public String getUserRolesForUI() {
         return roles.stream()
@@ -80,31 +84,23 @@ public class User implements UserDetails {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
-    public void setRoles(String role) {
-        Role role1 = new Role(role);
-        if (role == null) {
-            this.roles = new ArrayList<>();
-        }
-        this.roles.add(role1);
     }
 
     @Override
@@ -128,7 +124,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override

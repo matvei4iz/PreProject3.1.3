@@ -2,30 +2,26 @@ package com.example.crudspringboot.controller;
 
 import com.example.crudspringboot.model.User;
 import com.example.crudspringboot.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/user")
-public class UserController {
+@AllArgsConstructor
+public class UserRestController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @GetMapping
-    public String currentUser(ModelMap model) {
+    @GetMapping("/authorizedUser")
+    public ResponseEntity<?> getAuthorizedUser() {
         UserDetails userDetails =
                 (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByUsername(userDetails.getUsername());
-        model.addAttribute("thisUser", user);
-        model.addAttribute("flag", user.getUserRolesForUI().contains("ADMIN"));
-        return "mainPageBS";
+        return ResponseEntity.ok().body(user);
     }
 }
