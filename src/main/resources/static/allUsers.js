@@ -22,11 +22,11 @@ function showAllUsers() {
 
                 let cell6 = row.insertCell();
                 cell6.innerHTML =
-                    '<button type="button" onclick="getModalEdit(' + user.id + ')" class="btn btn-info btn-sm">Изменить</button>';
+                    '<button type="button" onclick="getModalEdit(' + user.id + ')" class="btn btn-info btn-sm" data-bs-toggle="modal">Изменить</button>';
 
                 let cell7 = row.insertCell();
                 cell7.innerHTML =
-                    '<button type="button" onclick="getModalDelete(' + user.id + ')" class="btn btn-danger btn-sm">Удалить</button>';
+                    '<button type="button" onclick="getModalDelete(' + user.id + ')" class="btn btn-danger btn-sm" data-bs-toggle="modalDelete">Удалить</button>';
             })
         });
 }

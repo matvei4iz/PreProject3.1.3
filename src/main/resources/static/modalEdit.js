@@ -26,9 +26,6 @@ function getModalEdit(id) {
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="TitleModalLabel">Edit user</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body bg-white">
                 <form id="formEditUser" style="width: 200px;"
@@ -79,8 +76,8 @@ function getModalEdit(id) {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Закрыть</button>
-                <button class="btn btn-primary" data-dismiss="modal"
+                        data-bs-dismiss="modal">Закрыть</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal"
                         onclick="editUser()">Изменить</button>
             </div>
         </div>

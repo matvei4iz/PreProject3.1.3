@@ -30,7 +30,7 @@ function newUser() {
                 '<td>' + window.formNewUser.newAge.value + '</td>' +
                 '<td>' + window.formNewUser.newUsername.value + '</td>' +
                 '<td>' + listRoles(user) + '</td>' +
-                '<td> <button type="button btn-info" onclick="getModalEdit(' + user.id + ')" class="btn btn-primary btn-sm">Изменить</button> </td>' +
+                '<td> <button type="button btn-info" onclick="getModalEdit(' + user.id + ')" class="btn btn-info btn-sm">Изменить</button> </td>' +
                 '<td> <button type="button" onclick="getModalDelete(' + user.id + ')" class="btn btn-danger btn-sm">Удалить</button> </td>' +
                 '</tr>');
 
@@ -41,6 +41,6 @@ function newUser() {
             window.formNewUser.newPassword.value = "";
             window.formNewUser.newRoles.value = "";
 
-            $('#NewUserCreated').modal();
+            $('#NewUserCreated').modal('show');
         });
 }

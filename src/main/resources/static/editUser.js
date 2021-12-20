@@ -34,7 +34,7 @@ function editUser() {
                 '<td>' + window.formEditUser.editAge.value + '</td>' +
                 '<td>' + window.formEditUser.editUsername.value + '</td>' +
                 '<td>' + listRoles(user) + '</td>' +
-                '<td> <button type="button btn-info" onclick="getModalEdit(' + id + ')" class="btn btn-primary btn-sm">Изменить</button> </td>' +
+                '<td> <button type="button" onclick="getModalEdit(' + id + ')" class="btn btn-info btn-sm ">Изменить</button> </td>' +
                 '<td> <button type="button" onclick="getModalDelete(' + id + ')" class="btn btn-danger btn-sm">Удалить</button> </td>' +
                 '</tr>');
         });
